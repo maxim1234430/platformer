@@ -1,45 +1,30 @@
-import pygame
-import pytmx
-from pytmx.util_pygame import load_pygame
+import pygame as pg  #импортивали библиотеку pygame как pg
+pg.init()     #инициализировали библиотеку pygame
+screen_width= 1024 #сохранили длину экрана в отдельную переменную
+screen_height= 800 #сохранили высоту экрана в отдельную переменную
 
-# Инициализация Pygame
-pygame.init()
+class Game():   #создали класс Game
+    def __init__(self): #функция конструктора класса
+        self.screen=pg.display.set_mode((screen_width,screen_height)) #сохранили экран как параметр класса с шириной и высотой
+        pg.display.set_caption("Платформер")   #создаём заголовок экрана
+        self.clock=pg.time.Clock()     #создаём переменную для отслеживания FPS
+        self.running=False  #создаём параметр отвечающий за запуск и выключение программы
+    def event(self):   #создаём метод для работы с событиями
+        for event in pg.event.get():  #получаем каждое событие
+            if event.type == pg.quit():  #если мы получили событие выхода из программы
+                self.running = False     #заканчиваем цикл while
+    def update(self):  #пока пустой метод
+        pass  #команда pass ничего не делает
+    def draw(self):   #создаём метод для отрисовки экрана
+        self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
+        pg.display.flip()   #обновляем экран
+    def run(self):    #метод основного игрового цикла
+        self.running=True  #создаём переменную для отслеживания состояния игры
+        while self.running:  #пока running==True основной цикл работает
+            self.event()
+            self.update()      #используем основные методы
+            self.draw()
+            self.clock.tick()
+        pg.quit()     #если программа закрыта то условия while не проходит и мы завершаем работу модуля pygame
+        quit()  #выходим из программы
 
-# Задаем параметры окна
-SCREEN_WIDTH = 1024
-SCREEN_HEIGHT = 800
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Platformer with Tiled Map")
-clock = pygame.time.Clock()
-
-# Загрузка карты .tmx
-tmx_file = 'map/map_platform.tmx'  # Путь к карте
-tmx_data = load_pygame(tmx_file)
-
-# Функция для отрисовки карты
-def draw_map(surface, tmx_data):
-    for layer in tmx_data.visible_layers:
-        if isinstance(layer, pytmx.TiledTileLayer):  # Проверяем, является ли слой тайловым
-            for x, y, gid in layer:  # Проходим по каждой плитке слоя
-                tile = tmx_data.get_tile_image_by_gid(gid)
-                if tile:  # Если тайл существует, отрисовываем его
-                    surface.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
-
-# Основной игровой цикл
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # Очистка экрана
-    screen.fill((0, 0, 0))
-
-    # Отрисовка карты
-    draw_map(screen, tmx_data)
-
-    # Обновление экрана
-    pygame.display.flip()
-    clock.tick(60)  # Ограничение FPS
-
-pygame.quit()
