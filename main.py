@@ -1,4 +1,7 @@
 import pygame as pg  #импортивали библиотеку pygame как pg
+
+from map import Tiled_map
+
 pg.init()     #инициализировали библиотеку pygame
 screen_width= 1024 #сохранили длину экрана в отдельную переменную
 screen_height= 800 #сохранили высоту экрана в отдельную переменную
@@ -32,4 +35,6 @@ class Game():   #создали класс Game
 if __name__=="__main__":    #проверяем что программа запущена из основного скрипта
     game=Game()         #создаём обьект класса
     game.run()          #используем метод класса
+    map1 = Tiled_map("map_platform.tmx")
+    map1.draw_map(self.screen )
 
