@@ -1,0 +1,18 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+    },
+    "last.externalTilesetPath": "C:/Users/maxpo/PycharmProjects/платформер/map",
+    "openFiles": [
+    ],
+    "project": "безымянный.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFilter": "Файлы набора тайлов Tiled (*.tsx *.xml)"
+}
