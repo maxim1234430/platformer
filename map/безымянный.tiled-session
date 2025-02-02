@@ -28,6 +28,7 @@
         }
     },
     "last.externalTilesetPath": "C:/Users/maxpo/PycharmProjects/платформер/map",
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
         "map_platform.tmx",
         "nature-paltformer-tileset-16x16.tsx"
@@ -37,5 +38,6 @@
         "nature-paltformer-tileset-16x16.tsx",
         "map_platform.tmx"
     ],
-    "tileset.lastUsedFilter": "Файлы набора тайлов Tiled (*.tsx *.xml)"
+    "tileset.lastUsedFilter": "Файлы набора тайлов Tiled (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx"
 }
