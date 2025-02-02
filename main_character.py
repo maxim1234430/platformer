@@ -36,7 +36,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             self.is_running_r=False
 
         if self.is_running_r:
-            self.velocity_x=10
+            self.velocity_x=5
         else:
             self.velocity_x=0
         new_x=self.rect.x+self.velocity_x  #сохраняем новое положение персонажа отнасительно его скорости

@@ -3,16 +3,39 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "map_platform.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "map_platform.tmx": {
+            "scale": 0.9193847656249999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 662.9433320941102,
+                "y": 399.72383026183024
+            }
+        },
+        "nature-paltformer-tileset-16x16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tileset_32x32(new).tsx": {
+            "scaleInDock": 1
+        }
     },
     "last.externalTilesetPath": "C:/Users/maxpo/PycharmProjects/платформер/map",
     "openFiles": [
+        "map_platform.tmx",
+        "nature-paltformer-tileset-16x16.tsx"
     ],
     "project": "безымянный.tiled-project",
     "recentFiles": [
+        "nature-paltformer-tileset-16x16.tsx",
+        "map_platform.tmx"
     ],
     "tileset.lastUsedFilter": "Файлы набора тайлов Tiled (*.tsx *.xml)"
 }
