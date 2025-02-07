@@ -20,7 +20,6 @@ class Game():   #создали класс Game
         for event in pg.event.get():  #получаем каждое событие
 
 
-            self.player1.get_keys()
 
 
 
@@ -28,7 +27,8 @@ class Game():   #создали класс Game
                 self.running = False     #заканчиваем цикл while
 
     def update(self):  #пока пустой метод
-        pass  #команда pass ничего не делает
+        keys = pg.key.get_pressed()
+        self.player1.move(keys)
     def draw(self):   #создаём метод для отрисовки экрана
         self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
         self.map1.draw_map(self.screen)

@@ -14,7 +14,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.rect= self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
         print(self.rect)
 
-        self.velocity_x=0#параметр скорость по x
+        self.speed=0#параметр скорость по x
         self.velocity_y=0#скорость по Y
         self.gravity=0#гравитация
         self.is_jumping=False#состояние прыжка
@@ -23,25 +23,27 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.map_width=map_width#размеры карты чтобы персонаж не мог выйти за них
         self.map_height=map_height
 
-    def get_keys(self):  #создаём метод отвечающий за получение нажатий кнопок и действий
-        keys = pg.key.get_pressed()#получаем кнопки которые были нажаты
-        if keys[pg.K_LEFT ]:#если нажата стрелка влево то задаём скорость -10
-            self.is_running_l=True
-        else:
-            self.is_running_l=False
+    def move(self, keys):
+        # Если нажата клавиша A, двигаем игрока влево
+        if keys[pg.K_a]:
+            new_x = self.rect.x - 1
+            if new_x >= 0 and new_x <=self.map_width-50:
+                self.rect.x = new_x
 
-        if keys[pg.K_RIGHT  ]:#если нажата стрелка вправо задаём скорость 10
-            self.is_running_r=True
-        else:
-            self.is_running_r=False
+        elif keys[pg.K_d]:
+            new_x =self.rect.x+1
+            if new_x >= 0 and new_x<=self.map_width-50:
+                self.rect.x = new_x
 
-        if self.is_running_r:
-            self.velocity_x=5
-        else:
-            self.velocity_x=0
-        new_x=self.rect.x+self.velocity_x  #сохраняем новое положение персонажа отнасительно его скорости
-        if 0<new_x<self.map_width :#если он не выходит за размеры карты
-            self.rect.x=new_x#изменяем положение персонажа
+        elif keys[pg.K_w]:
+            new_y = self.rect.y - 1
+            if new_y >= 0 and new_y <= self.map_height:
+                self.rect.y = new_y
+
+        elif keys[pg.K_s]:
+            new_y = self.rect.y + 1
+            if new_y >= 0 and new_y <= self.map_height:
+                self.rect.y = new_y
 
 
 
