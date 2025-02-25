@@ -29,17 +29,23 @@ class Game():   #создали класс Game
     def update(self):  #пока пустой метод
         keys = pg.key.get_pressed()
         self.player1.move(keys)
+        self.map1 .collisition(self.player1.rect,self.screen )
+
     def draw(self):   #создаём метод для отрисовки экрана
         self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
         self.map1.draw_map(self.screen)
         self.screen.blit(self.player1.image,(self.player1.rect))
         pg.display.flip()   #обновляем экран
+
+
+
     def run(self):    #метод основного игрового цикла
         self.running=True  #изменяем переменную для отслеживания состояния игры
         while self.running:  #пока running==True основной цикл работает
             self.event()
             self.update()      #используем основные методы
             self.draw()
+
             self.clock.tick()
 
 
