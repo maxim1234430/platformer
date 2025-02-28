@@ -1,10 +1,36 @@
 import pygame as pg
+import pygame.image
+
+
 class Player(pg.sprite.Sprite ):  #создаём класс для игрока передаём который наследует класс Sprite
     def __init__(self,map_width,map_height):#создаём конструктор класса и передаём туда размеры карты,картинку персонажа
         super(Player,self ).__init__()  #класс Player наследует методы класса Sprite
                            #alpha каналы это прозрачные пиксели заполняющие фон картинки
-        self.image=pg.image.load("images/state1.png").convert_alpha()#сохраняем картинку в image и настраиваем alpha каналы
-        self.image=pg.transform.scale(self.image,(16,32))
+
+        self.image = pg.image.load("images/state1.png"
+                                   ).convert_alpha()  # сохраняем картинку в image и настраиваем alpha каналы
+        self.image = pg.transform.scale(self.image, (32, 64))
+        self.frame_index=0      #текущий кадр
+        self.animation_speed=10  #скорость смены анимации
+        self.frame_count=0      #счётчик кадров
+
+        self.frames=[pygame.transform.scale(pygame.image.load("images/state1.png"),(32,64)),
+            pygame.transform.scale(pygame.image.load("images/state2.png"),(32,64)),
+            pygame.transform.scale(pygame.image.load("images/state3.png"), (32, 64)),
+            pygame.transform.scale(pygame.image.load("images/state4.png"), (32, 64)),
+            pygame.transform.scale(pygame.image.load("images/state5.png"), (32, 64)),
+            pygame.transform.scale(pygame.image.load("images/state6.png"), (32, 64)),
+            pygame.transform.scale(pygame.image.load("images/state7.png"), (32, 64)),
+            pygame.transform.scale(pygame.image.load("images/state8.png"), (32, 64))
+
+        ]
+        if self.frame_count%self.animation_speed==0:
+            self.frame_count=0
+            self.frame_index+=1
+            if self.frame_index>=7:
+                self.frame_index=0
+
+
 
 
         self.rect= self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
@@ -31,9 +57,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             new_x = self.rect.x - 1
             if new_x >= 0 and new_x <=self.map_width:
                 self.rect.x = new_x
-                self.image = pg.image.load("images/state6.png").convert_alpha()
-                self.image = pg.transform.scale(self.image, (16, 32))
-                self.rect = self.image.get_rect()
+
 
 
 
@@ -42,9 +66,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             new_x =self.rect.x+1
             if new_x >= 0 and new_x<=self.map_width:
                 self.rect.x = new_x
-                self.image = pg.image.load("images/state2.png").convert_alpha()
-                self.image = pg.transform.scale(self.image, (16, 32))
-                self.rect = self.image.get_rect()
+
 
         elif keys[pg.K_w]:
             new_y = self.rect.y - 1
@@ -55,6 +77,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             new_y = self.rect.y + 1
             if new_y >= 0 and new_y <= self.map_height:
                 self.rect.y = new_y
+        self.frame_count+=1
 
 
 
