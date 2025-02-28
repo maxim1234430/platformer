@@ -1,15 +1,11 @@
 import pygame as pg
 class Player(pg.sprite.Sprite ):  #создаём класс для игрока передаём который наследует класс Sprite
-    def __init__(self,map_width,map_height,image_path=None):#создаём конструктор класса и передаём туда размеры карты,картинку персонажа
+    def __init__(self,map_width,map_height):#создаём конструктор класса и передаём туда размеры карты,картинку персонажа
         super(Player,self ).__init__()  #класс Player наследует методы класса Sprite
+                           #alpha каналы это прозрачные пиксели заполняющие фон картинки
+        self.image=pg.image.load("images/state1.png").convert_alpha()#сохраняем картинку в image и настраиваем alpha каналы
+        self.image=pg.transform.scale(self.image,(16,32))
 
-
-        if image_path:                                           #alpha каналы это прозрачные пиксели заполняющие фон картинки
-            self.image=pg.image.load(image_path ).convert_alpha()#сохраняем картинку в image и настраиваем alpha каналы
-            self.image=pg.transform.scale(self.image,(16,16))
-        else:#если картинки нет то сохраняем в картинку квадрат 50 на 50 устанавливаем карсный цвет
-            self.image=pg.Surface((16,16))
-            self.image.fill("red")
 
         self.rect= self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
         self.rect.x=50
@@ -26,18 +22,29 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.map_height=map_height
 
     def move(self, keys):
-        new_y=self.rect.y+1
-        if new_x
+
+        if self.rect.bottom >=self.map_height:    #self.bottom-нижняя точка обьекта
+            self.rect.bottom =self.map_height
+        #self.rect.y=self.rect.y+self.gravity
         # Если нажата клавиша A, двигаем игрока влево
         if keys[pg.K_a]:
             new_x = self.rect.x - 1
             if new_x >= 0 and new_x <=self.map_width:
                 self.rect.x = new_x
+                self.image = pg.image.load("images/state6.png").convert_alpha()
+                self.image = pg.transform.scale(self.image, (16, 32))
+                self.rect = self.image.get_rect()
+
+
+
 
         elif keys[pg.K_d]:
             new_x =self.rect.x+1
             if new_x >= 0 and new_x<=self.map_width:
                 self.rect.x = new_x
+                self.image = pg.image.load("images/state2.png").convert_alpha()
+                self.image = pg.transform.scale(self.image, (16, 32))
+                self.rect = self.image.get_rect()
 
         elif keys[pg.K_w]:
             new_y = self.rect.y - 1
