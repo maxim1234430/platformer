@@ -26,10 +26,13 @@ class Game():   #создали класс Game
             if event.type == pg.QUIT :  #если мы получили событие выхода из программы
                 self.running = False     #заканчиваем цикл while
 
-    def update(self):  #пока пустой метод
+    def update(self):
         keys = pg.key.get_pressed()
         self.player1.move(keys)
-        self.map1 .collisition(self.player1.rect,self.screen )
+        self.map1.collisition(self.player1.rect,self.screen )
+        self.player1.animation_r()
+        self.player1.animation_l()
+
 
     def draw(self):   #создаём метод для отрисовки экрана
         self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
