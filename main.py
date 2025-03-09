@@ -14,8 +14,9 @@ class Game():   #создали класс Game
         pg.display.set_caption("Платформер")   #создаём заголовок экрана
         self.clock=pg.time.Clock()     #создаём переменную для отслеживания FPS
         self.running=False  #создаём параметр отвечающий за запуск и выключение программы
+        self.player1 = Player(screen_width, screen_height)
         self.map1 = Tiled_map("map/map_platform.tmx")
-        self.player1=Player(screen_width,screen_height)
+
     def event(self):   #создаём метод для работы с событиями
         for event in pg.event.get():  #получаем каждое событие
 
@@ -28,8 +29,8 @@ class Game():   #создали класс Game
 
     def update(self):
         keys = pg.key.get_pressed()
-        self.player1.move(keys)
-        self.map1.collisition(self.player1.rect,self.screen )
+        self.player1.move(keys,self.map1.gravity)
+        self.map1.collisition(self.player1.rect,self.screen)
         self.player1.animation_r()
         self.player1.animation_l()
 

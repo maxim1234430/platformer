@@ -12,11 +12,11 @@
             "scaleInDock": 1
         },
         "map_platform.tmx": {
-            "scale": 0.9193847656249999,
-            "selectedLayer": 1,
+            "scale": 1.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 477.4932285304584,
-                "y": 690.1354293908335
+                "x": 804.6666666666666,
+                "y": 561.6666666666666
             }
         },
         "nature-paltformer-tileset-16x16.tsx": {

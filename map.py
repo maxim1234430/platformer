@@ -6,6 +6,10 @@ class Tiled_map ():  #новый класс tiled_map
         self.tmx_data = pytmx.load_pygame(map_file)   #загружаем карту в параметр
         self.width = self.tmx_data.width*self.tmx_data.tilewidth #сохраняем ширину в пикселях
         self.height = self.tmx_data.height*self.tmx_data.tileheight #сохраняем высоту в пикселях
+        self.spisok_move_block=[]
+        self.st=True
+        self.gravity=0
+        self.col_stolk=0
     def draw_map(self,surface): #метод отрисовки карты surface-поверхность на которой отрисовываем
         for layer in self.tmx_data.visible_layers: # с помощью цикла for проходимся по карте
             if hasattr(layer, "data"):   #если это слой тайлов
@@ -26,14 +30,28 @@ class Tiled_map ():  #новый класс tiled_map
                             surface.blit(image, (16 * x, 16 * y))
             # Если есть объектный слой — проверяем столкновения
             if isinstance(layer,pytmx.TiledObjectGroup):
-                if layer.name == "move_block":
+                if layer.name == "moved_block":
                     # Для примера оставим телепорт. Пока только выводит print
                     for obj in layer:
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
+                        if self.st==True:
+                            self.spisok_move_block.append(rect1)
+
+
                         if block.colliderect(rect1):
-                            print("teleport сработал!",rect1)
+                            self.col_stolk+=1
+                            print(rect1)
                             print(block)
+                            print("столкновение")
+
             layer_index += 1
+            self.st=False
+            if self.col_stolk==0:
+                self.gravity=1
+            else:
+                self.gravity=0
+            self.col_stolk=0
+
 
 
 
