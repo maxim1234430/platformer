@@ -29,7 +29,7 @@ class Tiled_map ():  #новый класс tiled_map
                         if image:
                             surface.blit(image, (16 * x, 16 * y))
             # Если есть объектный слой — проверяем столкновения
-            if isinstance(layer,pytmx.TiledObjectGroup):
+            elif isinstance(layer,pytmx.TiledObjectGroup):
                 if layer.name == "moved_block":
                     # Для примера оставим телепорт. Пока только выводит print
                     for obj in layer:

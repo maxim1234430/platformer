@@ -7,7 +7,8 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         super(Player,self ).__init__()  #класс Player наследует методы класса Sprite
 
         #инициализация переменных для анимации
-        self.frame_index = 0  # текущий кадр
+        self.frame_index_l = 0  # текущий кадр
+        self.frame_index_r = 0
         self.animation_speed = 10  # скорость смены анимации
         self.frame_count = 0  # счётчик кадров
 
@@ -25,7 +26,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
 
         #начальное изображение
-        self.image=self.frames_r[self.frame_index]
+        self.image=self.frames_r[self.frame_index_r]
         self.rect= self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
         self.rect.x=50
         self.rect.y=400
@@ -40,7 +41,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.map_width=map_width#размеры карты чтобы персонаж не мог выйти за них
         self.map_height=map_height
 
-    def move(self, keys,gravity):
+    def move(self, keys, gravity):
 
         if self.rect.bottom >=self.map_height:    #self.bottom-нижняя точка обьекта
             self.rect.bottom =self.map_height
@@ -87,21 +88,20 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
     def animation_r(self):
         if self.is_running_r:
             if self.frame_count%self.animation_speed==0:
-                self.frame_index+=1
-            self.image=self.frames_r[self.frame_index]
-            print("анимация сменилась")
-            if self.frame_index==3:
+                self.frame_count=0
+                self.frame_index_r+=1
+            self.image=self.frames_r[self.frame_index_r]
+            if self.frame_index_r>=len(self.frames_r):
                 self.frame_index=0
     def animation_l(self):
         if self.is_running_l:
             if self.frame_count%self.animation_speed==0:
                 self.frame_count=0
-                self.frame_index+=1
-            self.image=self.frames_l[self.frame_index]
+                self.frame_index_l+=1
+            self.image=self.frames_l[self.frame_index_l]
             print("анимация сменилась")
-            if self.frame_index==3:
-                self.frame_count = 0
-                self.frame_index=0
+            if self.frame_index_l==3:
+                self.frame_index_l=0
 
 
 
