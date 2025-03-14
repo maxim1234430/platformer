@@ -87,12 +87,13 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
     def animation_r(self):
         if self.is_running_r:
-            if self.frame_count%self.animation_speed==0:
-                self.frame_count=0
-                self.frame_index_r+=1
+            if self.frame_count % self.animation_speed == 0:
+                self.frame_count = 0
+                self.frame_index_r += 1
+            if self.frame_index_r >= len(self.frames_r):
+                self.frame_index_r = 0
             self.image=self.frames_r[self.frame_index_r]
-            if self.frame_index_r>=len(self.frames_r):
-                self.frame_index=0
+
     def animation_l(self):
         if self.is_running_l:
             if self.frame_count%self.animation_speed==0:
