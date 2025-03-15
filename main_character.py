@@ -74,12 +74,8 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
 
 
-        if keys[pg.K_w]:
-            new_y = self.rect.y - 1
-            if new_y >= 0 and new_y <= self.map_height:
-                self.rect.y = new_y
 
-        elif keys[pg.K_s]:
+        if keys[pg.K_s]:
             new_y = self.rect.y + 1
             if new_y >= 0 and new_y <= self.map_height:
                 self.rect.y = new_y
