@@ -40,8 +40,9 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.is_running_r=False
         self.map_width=map_width#размеры карты чтобы персонаж не мог выйти за них
         self.map_height=map_height
+        self.free_down=0
 
-    def move(self, keys, gravity):
+    def move(self, keys, gravity, is_on_floor):
 
         if self.rect.bottom >=self.map_height:    #self.bottom-нижняя точка обьекта
             self.rect.bottom =self.map_height
@@ -74,12 +75,15 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
 
 
-
-        if keys[pg.K_s]:
-            new_y = self.rect.y + 1
-            if new_y >= 0 and new_y <= self.map_height:
-                self.rect.y = new_y
-        self.frame_count+=1
+        #if is_on_floor==True:
+        #    if keys[pg.K_w or pg.K_SPACE]:
+        #        for i in range(15):
+        #            new_y = self.rect.y - self.free_down
+       #             self.free_down=self.free_down+1
+         #           if new_y >= 0 and new_y <= self.map_height:
+       #                 self.rect.y = new_y
+        #        self.free_down=0
+       #         self.frame_count+=1
 
     def animation_r(self):
         if self.is_running_r:
@@ -96,7 +100,6 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
                 self.frame_count=0
                 self.frame_index_l+=1
             self.image=self.frames_l[self.frame_index_l]
-            print("анимация сменилась")
             if self.frame_index_l==3:
                 self.frame_index_l=0
 

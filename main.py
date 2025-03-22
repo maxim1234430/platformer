@@ -16,6 +16,7 @@ class Game():   #создали класс Game
         self.running=False  #создаём параметр отвечающий за запуск и выключение программы
         self.player1 = Player(screen_width, screen_height)
         self.map1 = Tiled_map("map/map_platform.tmx")
+        self.map1.find_spisoks()
 
     def event(self):   #создаём метод для работы с событиями
         for event in pg.event.get():  #получаем каждое событие
@@ -29,8 +30,10 @@ class Game():   #создали класс Game
 
     def update(self):
         keys = pg.key.get_pressed()
-        self.player1.move(keys,self.map1.gravity)
-        self.map1.collisition(self.player1.rect,self.screen)
+        self.map1.collisition(self.player1.rect, self.screen)
+        self.player1.move(keys,self.map1.gravity,self.map1.is_on_floor )
+
+
         self.player1.animation_r()
         self.player1.animation_l()
 
@@ -38,6 +41,7 @@ class Game():   #создали класс Game
     def draw(self):   #создаём метод для отрисовки экрана
         self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
         self.map1.draw_map(self.screen)
+        #self.map1.tiled_draw(self.screen)
         self.screen.blit(self.player1.image,(self.player1.rect))
         pg.display.flip()   #обновляем экран
 
