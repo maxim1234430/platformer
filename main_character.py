@@ -40,13 +40,24 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.is_running_r=False
         self.map_width=map_width#размеры карты чтобы персонаж не мог выйти за них
         self.map_height=map_height
-        self.free_down=0
+        self.jump_speed=10
+        self.high_jump=30
 
     def move(self, keys, gravity, is_on_floor):
 
         if self.rect.bottom >=self.map_height:    #self.bottom-нижняя точка обьекта
             self.rect.bottom =self.map_height
+
+        if is_on_floor:
+            self.is_jumping = False
+            if keys[pg.K_w] and not self.is_jumping:
+                self.gravity = self.jump_speed
+                self.is_jumping = True
+
+
+        #на перрсонажа действует гравитация
         self.rect.y=self.rect.y+gravity
+
         # Если нажата клавиша A, двигаем игрока влево
         if keys[pg.K_a]:
             new_x = self.rect.x - 1
@@ -75,15 +86,8 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
 
 
-        #if is_on_floor==True:
-        #    if keys[pg.K_w or pg.K_SPACE]:
-        #        for i in range(15):
-        #            new_y = self.rect.y - self.free_down
-       #             self.free_down=self.free_down+1
-         #           if new_y >= 0 and new_y <= self.map_height:
-       #                 self.rect.y = new_y
-        #        self.free_down=0
-       #         self.frame_count+=1
+
+
 
     def animation_r(self):
         if self.is_running_r:
