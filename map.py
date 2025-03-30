@@ -1,5 +1,6 @@
 import pytmx  # импрортировали метод load_pygame из библиотеки pytmx
 import pygame as pg
+from traps import Moving_object
 class Tiled_map ():  #новый класс tiled_map
 #ОРТОГАНАЛЬНАЯ ориентация карты (карта из квадратов)
     def __init__(self, map_file): #передаём в конструктор класса файл с картой
@@ -9,6 +10,8 @@ class Tiled_map ():  #новый класс tiled_map
         self.spisok_floor_block=[]
         self.spisok_r_block = []
         self.spisok_l_block = []
+        self.spisok_moving_block = []
+
 
 
         self.st=True
@@ -39,6 +42,13 @@ class Tiled_map ():  #новый класс tiled_map
                     for obj in layer:
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
                         self.spisok_r_block.append(rect1)
+
+                if layer.name == "molot":
+                    for obj in layer:
+                        rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
+                        molot=Moving_object(rect1,"hummer")
+                        self.spisok_moving_block.append(molot)
+
         print(str(self.spisok_floor_block) + " пол")
         print(str(self.spisok_r_block) + " правые стены")
         print(str(self.spisok_l_block) + " левые стены")
