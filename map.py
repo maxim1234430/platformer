@@ -12,7 +12,6 @@ class Tiled_map ():  #новый класс tiled_map
 
 
         self.st=True
-        self.gravity=1
         self.wall_collistion=False
     def draw_map(self,surface): #метод отрисовки карты surface-поверхность на которой отрисовываем
         for layer in self.tmx_data.visible_layers: # с помощью цикла for проходимся по карте
@@ -61,13 +60,11 @@ class Tiled_map ():  #новый класс tiled_map
 
             if block.colliderect(rect1):
                 self.col_stolk += 1
-                self.gravity = 0
 
                 if abs(block.bottom - rect1.top) < 10:
                     block.bottom = rect1.top
                     self.is_on_floor = True
-            else:
-                self.gravity=1
+
 
 
         for rect1 in self.spisok_l_block  :

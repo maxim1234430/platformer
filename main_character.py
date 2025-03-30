@@ -10,7 +10,8 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.frame_index_l = 0  # текущий кадр
         self.frame_index_r = 0
         self.animation_speed = 10  # скорость смены анимации
-        self.frame_count = 0  # счётчик кадров
+        self.frame_count_r = 0  # счётчик кадров
+        self.frame_count_l = 0
 
         # загрузка изображений для анимации
         self.frames_r=[pygame.transform.scale(pygame.image.load("images/state1.png"),(32,64)),
@@ -35,29 +36,36 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
 
         #общие парраметры объекта#гравитация
-        self.is_jumping=False#состояние прыжка
-        self.is_running_l=False
-        self.is_running_r=False
-        self.map_width=map_width#размеры карты чтобы персонаж не мог выйти за них
-        self.map_height=map_height
-        self.jump_speed=-2
-        self.vert_speed=0
-        self.high_jump=30
+        self.is_jumping = False#состояние прыжка
+        self.is_running_l = False#касание левой стены
+        self.is_running_r = False#касание правой стены
+        self.map_width = map_width#размеры карты чтобы персонаж не мог выйти за них
+        self.map_height = map_height
+        self.jump_speed = -4#скорость с которой игрок прыгает
+        self.vert_speed = 0#скорость движения игрока по вертикали состоит из гравитации и прыжка
+        self.high_jump = 30#максимальная высота на которую мы можем прыгнуть
 
-    def move(self, keys, gravity, is_on_floor):
-
-        if self.rect.bottom >=self.map_height:    #self.bottom-нижняя точка обьекта
-            self.rect.bottom =self.map_height
-
+    #метод для движения игрока
+    def move(self, keys, is_on_floor):
+        #проверка чтобы игрок оставался на полу
+        if self.rect.bottom >=self.map_height:#self.bottom-нижняя точка обьекта,если игрок на полу или ниже
+            self.rect.bottom =self.map_height#то игрока отбрасывет до верхней точки пола
+            self.is_jumping = False#состояние прыжка меняется
+            self.vert_speed = 0#вертикальная скорость ноль потому что мы на полу
+        #условие для прыжка
         if is_on_floor:
-            self.is_jumping = False
-            if keys[pg.K_w] and not self.is_jumping:
-                self.vert_speed  = self.jump_speed
-                self.is_jumping = True
+            self.is_jumping = False#состояние прыжка меняется
+            self.vert_speed = 0#вертикальная скорость ноль потому что мы на полу
+            #можем прыгать если только находимся на полу
+            if keys[pg.K_w] or keys [pg.K_SPACE ] and not self.is_jumping:#если нажата кнопка прыжка и мы ещё не прыгаем то
+                self.vert_speed = self.jump_speed#вертикальная скорость равна скорости прыжка
+                self.is_jumping = True#состояние прыжка True
+
+        else:#если мы не на полу то на нас действует гравитация
+            self.vert_speed += 0.1#вертикальная скорость увеличивается на один невелируя прыжок
 
 
         #на перрсонажа действует гравитация
-        self.rect.y=self.rect.y+gravity
         self.rect.y=self.rect.y+self.vert_speed
 
         # Если нажата клавиша A, двигаем игрока влево
@@ -93,21 +101,29 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
     def animation_r(self):
         if self.is_running_r:
-            if self.frame_count % self.animation_speed == 0:
-                self.frame_count = 0
+            if self.frame_count_r % self.animation_speed == 0:
+                self.frame_count_r = 0
                 self.frame_index_r += 1
             if self.frame_index_r >= len(self.frames_r):
                 self.frame_index_r = 0
             self.image=self.frames_r[self.frame_index_r]
+        elif not self.is_running_r and self.image in self.frames_r:
+            self.frame_count_r = 0
+            self.frame_index_r = 0
+            self.image = self.frames_r[0]
 
     def animation_l(self):
         if self.is_running_l:
-            if self.frame_count%self.animation_speed==0:
-                self.frame_count=0
+            if self.frame_count_l%self.animation_speed==0:
+                self.frame_count_l=0
                 self.frame_index_l+=1
             self.image=self.frames_l[self.frame_index_l]
             if self.frame_index_l==3:
                 self.frame_index_l=0
+        elif not self.is_running_l and self.image in self.frames_l :
+            self.frame_count_l = 0
+            self.frame_index_l = 0
+            self.image = self.frames_l[0]
 
 
 

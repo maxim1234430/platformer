@@ -31,7 +31,7 @@ class Game():   #создали класс Game
     def update(self):
         keys = pg.key.get_pressed()
         self.map1.collisition(self.player1.rect, self.screen)
-        self.player1.move(keys,self.map1.gravity,self.map1.is_on_floor )
+        self.player1.move(keys,self.map1.is_on_floor )
 
 
         self.player1.animation_r()
