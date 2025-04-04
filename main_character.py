@@ -124,21 +124,3 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             self.frame_count_l = 0
             self.frame_index_l = 0
             self.image = self.frames_l[0]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

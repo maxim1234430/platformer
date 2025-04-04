@@ -2,6 +2,7 @@ import pygame as pg  #импортивали библиотеку pygame как 
 
 from map import Tiled_map
 from main_character import Player
+from traps import Moving_object
 
 
 pg.init()     #инициализировали библиотеку pygame
@@ -18,6 +19,8 @@ class Game():   #создали класс Game
         self.map1 = Tiled_map("map/map_platform.tmx")
         self.map1.find_spisoks()
 
+
+
     def event(self):   #создаём метод для работы с событиями
         for event in pg.event.get():  #получаем каждое событие
 
@@ -32,7 +35,7 @@ class Game():   #создали класс Game
         keys = pg.key.get_pressed()
         self.map1.collisition(self.player1.rect, self.screen)
         self.player1.move(keys,self.map1.is_on_floor )
-
+        # Обновление движущихся объектов
 
         self.player1.animation_r()
         self.player1.animation_l()
@@ -66,9 +69,3 @@ class Game():   #создали класс Game
 if __name__=="__main__":    #проверяем что программа запущена из основного скрипта
     game=Game()         #создаём обьект класса
     game.run()          #используем метод класса
-
-
-
-
-
-

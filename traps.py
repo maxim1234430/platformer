@@ -16,14 +16,3 @@ class Moving_object():
 
             elif self.direction == -1:
                 self.rect.y -= self.speed
-
-
-
-
-
-
-
-
-
-
-

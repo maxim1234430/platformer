@@ -16,6 +16,7 @@ class Tiled_map ():  #новый класс tiled_map
 
         self.st=True
         self.wall_collistion=False
+
     def draw_map(self,surface): #метод отрисовки карты surface-поверхность на которой отрисовываем
         for layer in self.tmx_data.visible_layers: # с помощью цикла for проходимся по карте
             if hasattr(layer, "data"):   #если это слой тайлов
@@ -23,6 +24,11 @@ class Tiled_map ():  #новый класс tiled_map
                     tile = self.tmx_data.get_tile_image_by_gid(gid) #сохраняем тайл в переменную указывая его номер
                     if tile:   #если мы сохранили тайл
                         surface.blit(tile, (x*self.tmx_data.tilewidth, y*self.tmx_data.tileheight))#отрисовывем на поверхности тайл с координата
+        # После отрисовки тайлов
+        # Отрисовка движущихся объектов
+        for moving_obj in self.spisok_moving_block:
+            # Отрисовываем прямоугольники для отладки (позже можно заменить на спрайты)
+            pg.draw.rect(surface, (139, 69, 19), moving_obj.rect)  # Коричневый цвет для молота
 
 
     def find_spisoks(self):
@@ -46,7 +52,7 @@ class Tiled_map ():  #новый класс tiled_map
                 if layer.name == "molot":
                     for obj in layer:
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
-                        molot=Moving_object(rect1,"hummer")
+                        molot = Moving_object(rect1, "hummer")
                         self.spisok_moving_block.append(molot)
 
         print(str(self.spisok_floor_block) + " пол")
@@ -97,24 +103,5 @@ class Tiled_map ():  #новый класс tiled_map
 
                     block.left=rect1.right
                     self.is_on_right_wall  =True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
