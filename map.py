@@ -11,6 +11,7 @@ class Tiled_map ():  #новый класс tiled_map
         self.spisok_r_block = []
         self.spisok_l_block = []
         self.spisok_moving_block = []
+        self.spisok_k=[]
 
 
 
@@ -54,6 +55,7 @@ class Tiled_map ():  #новый класс tiled_map
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
                         molot = Moving_object(rect1, "hummer")
                         self.spisok_moving_block.append(molot)
+                        self.spisok_k.append(rect1)
 
         print(str(self.spisok_floor_block) + " пол")
         print(str(self.spisok_r_block) + " правые стены")
@@ -103,5 +105,22 @@ class Tiled_map ():  #новый класс tiled_map
 
                     block.left=rect1.right
                     self.is_on_right_wall  =True
+        print(self.spisok_moving_block )
+        for rect1 in self.spisok_k :
+            if block.colliderect(rect1):
+                if abs(block.left - rect1.right)<10:
+
+                    block.left=rect1.right
+                    self.is_on_right_wall  =True
+                if abs(block.right - rect1.left)<10:
+
+                    block.right=rect1.left
+                    self.is_on_left_wall  =True
+
+                if abs(block.bottom - rect1.top) < 10:
+                    block.bottom = rect1.top
+                    self.is_on_floor = True
+
+
 
 
