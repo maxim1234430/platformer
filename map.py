@@ -49,7 +49,7 @@ class Tiled_map ():  #новый класс tiled_map
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
                         self.spisok_r_block.append(rect1)
 
-                if layer.name == "molot":
+                if layer.name == "moving_wall":
                     for obj in layer:
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
                         molot = Moving_object(rect1, "hummer")

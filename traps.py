@@ -10,9 +10,16 @@ class Moving_object():
         self.max_cord=480
         self.rect = rect
     def moved_object(self):
-        if self.rect.bottom <= self.max_cord  and self.rect.top>=self.min_cord :
-            if self.direction == 1:
-                self.rect.y += self.speed
+        if self.rect.y==self.max_cord:
+            self.direction=-1
 
-            elif self.direction == -1:
-                self.rect.y -= self.speed
+        if self.rect.y==self.min_cord:
+            self.direction=1
+
+
+        if self.direction == 1:
+            self.rect.y += self.speed
+
+
+        elif self.direction == -1:
+            self.rect.y -= self.speed

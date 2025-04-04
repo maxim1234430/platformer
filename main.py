@@ -35,7 +35,10 @@ class Game():   #создали класс Game
         keys = pg.key.get_pressed()
         self.map1.collisition(self.player1.rect, self.screen)
         self.player1.move(keys,self.map1.is_on_floor )
+
         # Обновление движущихся объектов
+        for moving_object in self.map1.spisok_moving_block:
+            moving_object.moved_object()
 
         self.player1.animation_r()
         self.player1.animation_l()
