@@ -7,11 +7,14 @@ class Tiled_map ():  #новый класс tiled_map
         self.tmx_data = pytmx.load_pygame(map_file)   #загружаем карту в параметр
         self.width = self.tmx_data.width*self.tmx_data.tilewidth #сохраняем ширину в пикселях
         self.height = self.tmx_data.height*self.tmx_data.tileheight #сохраняем высоту в пикселях
-        self.spisok_floor_block=[]
+        self.spisok_floor_block = []
+        self.spisok_seiling_block = []
         self.spisok_r_block = []
         self.spisok_l_block = []
         self.spisok_moving_block = []
         self.spisok_k=[]
+        self.spisok_stair_block=[]
+        self.is_on_stair = False
 
 
 
@@ -40,6 +43,10 @@ class Tiled_map ():  #новый класс tiled_map
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
 
                         self.spisok_floor_block.append(rect1)
+                if layer.name == "ceiling":
+                    for obj in layer:
+                        rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
+                        self.spisok_seiling_block.append(rect1)
                 if layer.name == "l_wall":
                     for obj in layer:
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
@@ -56,6 +63,11 @@ class Tiled_map ():  #новый класс tiled_map
                         molot = Moving_object(rect1, "hummer")
                         self.spisok_moving_block.append(molot)
                         self.spisok_k.append(rect1)
+
+                if layer.name == "stair":
+                    for obj in layer:
+                        rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
+                        self.spisok_stair_block.append(rect1)
 
         print(str(self.spisok_floor_block) + " пол")
         print(str(self.spisok_r_block) + " правые стены")
@@ -83,6 +95,15 @@ class Tiled_map ():  #новый класс tiled_map
                     block.bottom = rect1.top
                     self.is_on_floor = True
 
+        for rect1 in self.spisok_seiling_block  :
+
+
+            if block.colliderect(rect1):
+                self.col_stolk += 1
+
+                if abs(block.top - rect1.bottom) < 10:
+                    block.top = rect1.bottom
+
 
 
         for rect1 in self.spisok_l_block  :
@@ -105,7 +126,7 @@ class Tiled_map ():  #новый класс tiled_map
 
                     block.left=rect1.right
                     self.is_on_right_wall  =True
-        print(self.spisok_moving_block )
+
         for rect1 in self.spisok_k :
             if block.colliderect(rect1):
                 if abs(block.left - rect1.right)<10:
@@ -120,6 +141,16 @@ class Tiled_map ():  #новый класс tiled_map
                 if abs(block.bottom - rect1.top) < 10:
                     block.bottom = rect1.top
                     self.is_on_floor = True
+
+                if abs(block.top - rect1.bottom) < 10:
+                    block.top = rect1.bottom
+
+        for rect1 in self.spisok_r_block:
+
+            if block.colliderect(rect1):
+                self.is_on_stair = True
+            else:
+                self.is_on_stair = False
 
 
 

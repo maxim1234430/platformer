@@ -86,12 +86,13 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         if keys[pg.K_d]:
             new_x =self.rect.x+1
             self.is_running_r=True
-            if new_x >= 0 and new_x<=self.map_width:
+            if new_x >= 0 and new_x<self.map_width-30:
                 self.rect.x = new_x
 
 
         else :
             self.is_running_r=False
+
 
 
 

@@ -7,7 +7,7 @@ class Moving_object():
         self.x = 0
         self.direction = 1
         self.min_cord=320
-        self.max_cord=480
+        self.max_cord=380
         self.rect = rect
     def moved_object(self):
         if self.rect.y==self.max_cord:
