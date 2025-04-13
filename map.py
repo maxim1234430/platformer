@@ -1,6 +1,5 @@
 import pytmx  # импрортировали метод load_pygame из библиотеки pytmx
 import pygame as pg
-from traps import Moving_object
 class Tiled_map ():  #новый класс tiled_map
 #ОРТОГАНАЛЬНАЯ ориентация карты (карта из квадратов)
     def __init__(self, map_file): #передаём в конструктор класса файл с картой
@@ -23,16 +22,13 @@ class Tiled_map ():  #новый класс tiled_map
 
     def draw_map(self,surface): #метод отрисовки карты surface-поверхность на которой отрисовываем
         for layer in self.tmx_data.visible_layers: # с помощью цикла for проходимся по карте
-            if hasattr(layer, "data"):   #если это слой тайлов
+            if hasattr(layer, "data") :   #если это слой тайлов
                 for x, y, gid in layer:    #получаем из тайла его координаты и номер по которому будем отрисововать
-                    tile = self.tmx_data.get_tile_image_by_gid(gid) #сохраняем тайл в переменную указывая его номер
+                    tile = self.tmx_data.get_tile_image_by_gid(gid) #сохраняем тайл в переменную указывая его айди
                     if tile:   #если мы сохранили тайл
                         surface.blit(tile, (x*self.tmx_data.tilewidth, y*self.tmx_data.tileheight))#отрисовывем на поверхности тайл с координата
-        # После отрисовки тайлов
-        # Отрисовка движущихся объектов
-        for moving_obj in self.spisok_moving_block:
-            # Отрисовываем прямоугольники для отладки (позже можно заменить на спрайты)
-            pg.draw.rect(surface, (139, 69, 19), moving_obj.rect)  # Коричневый цвет для молота
+
+
 
 
     def find_spisoks(self):
@@ -57,12 +53,6 @@ class Tiled_map ():  #новый класс tiled_map
                         rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
                         self.spisok_r_block.append(rect1)
 
-                if layer.name == "moving_wall":
-                    for obj in layer:
-                        rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
-                        molot = Moving_object(rect1, "hummer")
-                        self.spisok_moving_block.append(molot)
-                        self.spisok_k.append(rect1)
 
                 if layer.name == "stair":
                     for obj in layer:
@@ -127,23 +117,6 @@ class Tiled_map ():  #новый класс tiled_map
                     block.left=rect1.right
                     self.is_on_right_wall  =True
 
-        for rect1 in self.spisok_k :
-            if block.colliderect(rect1):
-                if abs(block.left - rect1.right)<10:
-
-                    block.left=rect1.right
-                    self.is_on_right_wall  =True
-                if abs(block.right - rect1.left)<10:
-
-                    block.right=rect1.left
-                    self.is_on_left_wall  =True
-
-                if abs(block.bottom - rect1.top) < 10:
-                    block.bottom = rect1.top
-                    self.is_on_floor = True
-
-                if abs(block.top - rect1.bottom) < 10:
-                    block.top = rect1.bottom
 
         for rect1 in self.spisok_r_block:
 

@@ -3,20 +3,32 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map_platform.tmx",
+    "activeFile": "C:/Users/maxpo/PycharmProjects/platformer-by-ulyana/levels/map1.tmx",
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
         ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/maxpo/PycharmProjects/platformer-by-ulyana/levels/map1.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 167,
+                "y": 514.5
+            }
+        },
+        "C:/Users/maxpo/PycharmProjects/platformer-by-ulyana/levels/nature-paltformer-tileset-16x16.tsx": {
             "scaleInDock": 1
         },
         "map_platform.tmx": {
             "scale": 3,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 764,
-                "y": 455.16666666666663
+                "x": 512.1666666666666,
+                "y": 399.83333333333326
             }
         },
         "nature-paltformer-tileset-16x16.tsx": {
@@ -32,12 +44,14 @@
     "map.lastUsedFormat": "tmx",
     "openFiles": [
         "map_platform.tmx",
-        "nature-paltformer-tileset-16x16.tsx"
+        "nature-paltformer-tileset-16x16.tsx",
+        "C:/Users/maxpo/PycharmProjects/platformer-by-ulyana/levels/map1.tmx"
     ],
     "project": "безымянный.tiled-project",
     "recentFiles": [
-        "nature-paltformer-tileset-16x16.tsx",
+        "C:/Users/maxpo/PycharmProjects/platformer-by-ulyana/levels/map1.tmx",
         "map_platform.tmx",
+        "nature-paltformer-tileset-16x16.tsx",
         "tileset_32x32(new).tsx"
     ],
     "tileset.lastUsedFilter": "Файлы набора тайлов Tiled (*.tsx *.xml)",

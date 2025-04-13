@@ -1,5 +1,5 @@
 import pygame as pg  #импортивали библиотеку pygame как pg
-
+import pytmx
 from map import Tiled_map
 from main_character import Player
 from traps import Moving_object
@@ -19,6 +19,29 @@ class Game():   #создали класс Game
         self.map1 = Tiled_map("map/map_platform.tmx")
         self.map1.find_spisoks()
 
+        self.tmx_data = pytmx.load_pygame("map/map_platform.tmx")
+        self.moving_tiles=[]
+        self.tile_images=[]
+
+        for layer in self.tmx_data :
+            if isinstance(layer, pytmx.TiledTileLayer) and layer.name == 'moving_tiles':
+                for x, y,id in layer:
+                    tile = self.tmx_data.get_tile_image_by_gid(id)
+                    if tile:
+                        tile = tile.convert_alpha()
+                        rect = pg.Rect(x * self.tmx_data.tilewidth, y * self.tmx_data.tileheight, 16, 16)
+                        self.moving_tiles.append(rect)
+                        self.tile_images.append(tile)
+        print(self.moving_tiles , self.tile_images )
+
+        self.molot = Moving_object(self.moving_tiles, self.tile_images, 55, 1)
+
+
+
+
+
+
+
 
 
     def event(self):   #создаём метод для работы с событиями
@@ -35,11 +58,7 @@ class Game():   #создали класс Game
         keys = pg.key.get_pressed()
         self.map1.collisition(self.player1.rect, self.screen)
         self.player1.move(keys,self.map1.is_on_floor )
-
-        # Обновление движущихся объектов
-        for moving_object in self.map1.spisok_moving_block:
-            moving_object.moved_object()
-
+        self.molot.update()
         self.player1.animation_r()
         self.player1.animation_l()
 
@@ -49,6 +68,7 @@ class Game():   #создали класс Game
         self.map1.draw_map(self.screen)
         #self.map1.tiled_draw(self.screen)
         self.screen.blit(self.player1.image,(self.player1.rect))
+        self.molot.draw(self.screen)
         pg.display.flip()   #обновляем экран
 
 
