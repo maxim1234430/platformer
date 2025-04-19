@@ -12,8 +12,8 @@ class Tiled_map ():  #новый класс tiled_map
         self.spisok_l_block = []
         self.spisok_moving_block = []
         self.spisok_k=[]
-        self.spisok_stair_block=[]
-        self.is_on_stair = False
+
+
 
 
 
@@ -54,10 +54,7 @@ class Tiled_map ():  #новый класс tiled_map
                         self.spisok_r_block.append(rect1)
 
 
-                if layer.name == "stair":
-                    for obj in layer:
-                        rect1 = pg.Rect(obj.x, obj.y, obj.width, obj.height)
-                        self.spisok_stair_block.append(rect1)
+
 
         print(str(self.spisok_floor_block) + " пол")
         print(str(self.spisok_r_block) + " правые стены")
@@ -96,6 +93,7 @@ class Tiled_map ():  #новый класс tiled_map
 
 
 
+
         for rect1 in self.spisok_l_block  :
 
             if block.colliderect(rect1):
@@ -118,12 +116,7 @@ class Tiled_map ():  #новый класс tiled_map
                     self.is_on_right_wall  =True
 
 
-        for rect1 in self.spisok_r_block:
 
-            if block.colliderect(rect1):
-                self.is_on_stair = True
-            else:
-                self.is_on_stair = False
 
 
 

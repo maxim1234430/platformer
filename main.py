@@ -34,7 +34,7 @@ class Game():   #создали класс Game
                         self.tile_images.append(tile)
         print(self.moving_tiles , self.tile_images )
 
-        self.molot = Moving_object(self.moving_tiles, self.tile_images, 55, 1)
+        self.molot = Moving_object(self.moving_tiles, self.tile_images, 100, 1)
 
 
 
@@ -56,6 +56,27 @@ class Game():   #создали класс Game
 
     def update(self):
         keys = pg.key.get_pressed()
+        for tile in self.moving_tiles:
+            if self.player1.rect.colliderect(tile):
+                print(str(self.player1.rect.bottom - tile.top),"проверка пола")
+                if abs(self.player1.rect.bottom - tile.top) < 10:
+                    self.player1.rect.bottom = tile.top
+                    self.is_on_floor = True
+
+                print(str (self.player1.rect.top - tile.bottom), "проверка потолка")
+                if abs(self.player1.rect.top - tile.bottom ) < 10:
+                    self.player1.rect.top = tile.bottom
+
+                print(str(self.player1.rect.right  - tile.left),"левая стена" )
+                if abs(self.player1.rect.right  - tile.left ) < 10:
+                    self.player1.rect.left = tile.right
+
+                print(str(self.player1.rect.left  - tile.right ),"правая стена")
+                if abs(self.player1.rect.left  - tile.right ) < 10:
+                    self.player1.rect.right = tile.left
+
+
+
         self.map1.collisition(self.player1.rect, self.screen)
         self.player1.move(keys,self.map1.is_on_floor )
         self.molot.update()
