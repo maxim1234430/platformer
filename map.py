@@ -10,8 +10,9 @@ class Tiled_map ():  #новый класс tiled_map
         self.spisok_seiling_block = []
         self.spisok_r_block = []
         self.spisok_l_block = []
-        self.spisok_moving_block = []
-        self.spisok_k=[]
+        self.spisok_k = []
+        self.moving_tiles = []
+        self.tile_images = []
 
 
 
@@ -114,6 +115,21 @@ class Tiled_map ():  #новый класс tiled_map
 
                     block.left=rect1.right
                     self.is_on_right_wall  =True
+
+    def load_moving_tiles(self):
+
+        for layer in self.tmx_data:
+            if isinstance(layer, pytmx.TiledTileLayer) and layer.name == 'moving_tiles':
+                for x, y, id in layer:
+                    tile = self.tmx_data.get_tile_image_by_gid(id)
+                    if tile:
+                        tile = tile.convert_alpha()
+                        rect = pg.Rect(x * self.tmx_data.tilewidth, y * self.tmx_data.tileheight, 16, 16)
+                        self.moving_tiles.append(rect)
+                        self.tile_images.append(tile)
+        return(self.moving_tiles,self.tile_images)
+
+
 
 
 
