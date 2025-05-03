@@ -14,23 +14,23 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.frame_count_l = 0
 
         # загрузка изображений для анимации
-        self.frames_r=[pygame.transform.scale(pygame.image.load("images/state1.png"),(32,64)),
-            pygame.transform.scale(pygame.image.load("images/state2.png"),(32,64)),
-            pygame.transform.scale(pygame.image.load("images/state3.png"), (32, 64)),
-            pygame.transform.scale(pygame.image.load("images/state4.png"), (32, 64)),
+        self.frames_r=[pygame.transform.scale(pygame.image.load("images/state1.png"),(16,32)),
+            pygame.transform.scale(pygame.image.load("images/state2.png"),(16,32)),
+            pygame.transform.scale(pygame.image.load("images/state3.png"), (16,32)),
+            pygame.transform.scale(pygame.image.load("images/state4.png"), (16,32)),
 
         ]
-        self.frames_l= [pygame.transform.scale(pygame.image.load("images/state5.png"), (32, 64)),
-            pygame.transform.scale(pygame.image.load("images/state6.png"), (32, 64)),
-            pygame.transform.scale(pygame.image.load("images/state7.png"), (32, 64)),
-            pygame.transform.scale(pygame.image.load("images/state8.png"), (32, 64))]
+        self.frames_l= [pygame.transform.scale(pygame.image.load("images/state5.png"), (16,32)),
+            pygame.transform.scale(pygame.image.load("images/state6.png"), (16,32)),
+            pygame.transform.scale(pygame.image.load("images/state7.png"), (16,32)),
+            pygame.transform.scale(pygame.image.load("images/state8.png"), (16,32))]
 
 
         #начальное изображение
         self.image=self.frames_r[self.frame_index_r]
         self.rect= self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
         self.rect.x=50
-        self.rect.y=400
+        self.rect.y=200
 
 
 
@@ -41,9 +41,9 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.is_running_r = False#касание правой стены
         self.map_width = map_width#размеры карты чтобы персонаж не мог выйти за них
         self.map_height = map_height
-        self.jump_speed = -4#скорость с которой игрок прыгает
+        self.jump_speed = -3#скорость с которой игрок прыгает
         self.vert_speed = 0#скорость движения игрока по вертикали состоит из гравитации и прыжка
-        self.high_jump = 30#максимальная высота на которую мы можем прыгнуть
+        self.high_jump = 10#максимальная высота на которую мы можем прыгнуть
 
     #метод для движения игрока
     def move(self, keys, is_on_floor):
