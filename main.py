@@ -6,8 +6,8 @@ from traps import Moving_object
 
 
 pg.init()     #инициализировали библиотеку pygame
-screen_width= 1024 #сохранили длину экрана в отдельную переменную
-screen_height= 800 #сохранили высоту экрана в отдельную переменную
+screen_width= 800 #сохранили длину экрана в отдельную переменную
+screen_height= 1024 #сохранили высоту экрана в отдельную переменную
 
 class Game():   #создали класс Game
     def __init__(self): #функция конструктора класса
@@ -16,11 +16,12 @@ class Game():   #создали класс Game
         self.clock=pg.time.Clock()     #создаём переменную для отслеживания FPS
         self.running=False  #создаём параметр отвечающий за запуск и выключение программы
         self.player1 = Player(screen_width, screen_height)
-        self.map1 = Tiled_map("map/map_platform.tmx")
+        self.map1 = Tiled_map("new_map/map.tmx")
         self.map1.find_spisoks()
-        self.moving_tiles , self.tile_image = self.map1.load_moving_tiles()
+        self.moving_tiles , self.tile_image,self.moving_tiles2 , self.tile_image2 = self.map1.load_moving_tiles()
         print(self.moving_tiles,self.tile_image )
         self.molot = Moving_object(self.moving_tiles,self.tile_image , 100 , 1)
+        self.platforma = Moving_object(self.moving_tiles2,self.tile_image2, 40, 2)
 
 
 
@@ -53,6 +54,7 @@ class Game():   #создали класс Game
 
         self.map1.collisition(self.player1.rect, self.screen)
         self.molot.update()
+        self.platforma.update()
         self.player1.move(keys,self.map1.is_on_floor )
 
         self.player1.animation_r()
@@ -63,6 +65,7 @@ class Game():   #создали класс Game
         self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
         self.map1.draw_map(self.screen)
         self.molot.draw(self.screen)
+        self.platforma.draw(self.screen)
         #self.map1.tiled_draw(self.screen)
         self.screen.blit(self.player1.image,(self.player1.rect))
         pg.display.flip()   #обновляем экран

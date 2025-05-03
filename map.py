@@ -13,6 +13,8 @@ class Tiled_map ():  #новый класс tiled_map
         self.spisok_k = []
         self.moving_tiles = []
         self.tile_images = []
+        self.moving_tiles2 = []
+        self.tile_images2 = []
 
 
 
@@ -127,7 +129,19 @@ class Tiled_map ():  #новый класс tiled_map
                         rect = pg.Rect(x * self.tmx_data.tilewidth, y * self.tmx_data.tileheight, 16, 16)
                         self.moving_tiles.append(rect)
                         self.tile_images.append(tile)
-        return(self.moving_tiles,self.tile_images)
+
+            if isinstance(layer, pytmx.TiledTileLayer) and layer.name == 'moving_tiles2':
+                for x, y, id in layer:
+                    tile = self.tmx_data.get_tile_image_by_gid(id)
+                    if tile:
+                        tile = tile.convert_alpha()
+                        rect = pg.Rect(x * self.tmx_data.tilewidth, y * self.tmx_data.tileheight, 16, 16)
+                        self.moving_tiles2.append(rect)
+                        self.tile_images2.append(tile)
+
+
+
+        return(self.moving_tiles,self.tile_images,self.moving_tiles2,self.tile_images2)
 
 
 
