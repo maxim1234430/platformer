@@ -39,6 +39,7 @@ class Game():   #создали класс Game
 
 
 
+
     def event(self):   #создаём метод для работы с событиями
         for event in pg.event.get():  #получаем каждое событие
 
