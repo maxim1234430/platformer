@@ -28,9 +28,9 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
 
         #начальное изображение
         self.image=self.frames_r[self.frame_index_r]
-        self.rect= self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
-        self.rect.x=50
-        self.rect.y=200
+        self.rect = self.image.get_rect()  #сохраняем в переменную параметр содержащий картинку
+        self.rect.x = 1000
+        self.rect.y = 200
         print(self.rect.centerx)
 
 

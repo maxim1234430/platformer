@@ -3,11 +3,12 @@ import pytmx
 from map import Tiled_map
 from main_character import Player
 from traps import Moving_object
+from screen_resise import Camera
 
 
 pg.init()     #инициализировали библиотеку pygame
-screen_width= 1600 #сохранили длину экрана в отдельную переменную
-screen_height= 320 #сохранили высоту экрана в отдельную переменную
+screen_width = 1600 #сохранили длину экрана в отдельную переменную
+screen_height = 320 #сохранили высоту экрана в отдельную переменную
 
 class Game():   #создали класс Game
     def __init__(self): #функция конструктора класса
@@ -22,6 +23,7 @@ class Game():   #создали класс Game
         print(self.moving_tiles,self.tile_image )
         self.molot = Moving_object(self.moving_tiles,self.tile_image , 100 , 1)
         self.platforma = Moving_object(self.moving_tiles2,self.tile_image2, 40, 2)
+        self.camera = Camera(self.map1.width ,self.map1.height ,screen_width ,screen_height )
 
 
 
@@ -57,6 +59,7 @@ class Game():   #создали класс Game
         self.molot.update()
         self.platforma.update()
         self.player1.move(keys,self.map1.is_on_floor )
+        self.camera.player_center(self.player1.rect)    # вычесляем местоположение игрока чтобы он был в центре экрана
 
         self.player1.animation_r()
         self.player1.animation_l()
