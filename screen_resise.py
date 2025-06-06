@@ -16,7 +16,7 @@ class Camera():
         self.screen_height = screen_height
 
         # зум
-        self.zoom = 4
+        self.zoom = 3
 
     # вычисляем центр игрока
     def player_center(self, target):

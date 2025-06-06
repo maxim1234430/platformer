@@ -23,7 +23,7 @@ class Tiled_map ():  #новый класс tiled_map
         self.st=True
         self.wall_collistion=False
 
-    def draw_map(self,surface): #метод отрисовки карты surface-поверхность на которой отрисовываем
+    def draw_map(self, surface, camera = None): #метод отрисовки карты surface-поверхность на которой отрисовываем
         for layer in self.tmx_data.visible_layers: # с помощью цикла for проходимся по карте
             if hasattr(layer, "data") :   #если это слой тайлов
                 for x, y, gid in layer:    #получаем из тайла его координаты и номер по которому будем отрисововать

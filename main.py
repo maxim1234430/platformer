@@ -67,11 +67,29 @@ class Game():   #создали класс Game
 
     def draw(self):   #создаём метод для отрисовки экрана
         self.screen.fill((135,206,250))      #закрашиваем экран светоголубым цветом
-        self.map1.draw_map(self.screen)
-        self.molot.draw(self.screen)
-        self.platforma.draw(self.screen)
+
+        for layer in self.map1.tmx_data.visible_layers: # с помощью цикла for проходимся по карте
+            if hasattr(layer, "data") :   #если это слой тайлов
+                for x, y, gid in layer:    #получаем из тайла его координаты и номер по которому будем отрисововать
+                    tile = self.map1.tmx_data.get_tile_image_by_gid(gid) #сохраняем тайл в переменную указывая его айди
+                    if tile:   #если мы сохранили тайл
+                        orig_x = x * self.map1.tmx_data.tilewidth
+                        orig_y = y * self.map1.tmx_data.tileheight
+                        new_x,new_y = self.camera.new_tile_rect(orig_x,orig_y)
+
+
+                        new_size = tile.width * self.camera.zoom
+                        big_tile = pg.transform.scale(tile,(new_size,new_size))
+                        self.screen.blit(big_tile,(new_x,new_y) )
+
+        width, height = self.player1.image.get_size()
+        new_size = (int(width * self.camera.zoom), int(height * self.camera.zoom))
+        new_image = pg.transform.scale(self.player1.image, new_size)
+
         #self.map1.tiled_draw(self.screen)
-        self.screen.blit(self.player1.image,(self.player1.rect))
+        self.screen.blit(new_image ,(self.camera.new_player_rect(self.player1.rect ) ))
+
+
         pg.display.flip()   #обновляем экран
 
 
