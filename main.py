@@ -5,6 +5,7 @@ from map import Tiled_map
 from screen_resise import Camera
 from traps import Moving_object
 import time
+from enemy import Enemy
 
 pg.init()     #инициализировали библиотеку pygame
 screen_width = 1600 #сохранили длину экрана в отдельную переменную
@@ -25,6 +26,7 @@ class Game():   #создали класс Game
         self.platforma = Moving_object(self.moving_tiles2,self.tile_image2, 40, 2)
         self.camera = Camera(self.map1.width ,self.map1.height ,screen_width ,screen_height )
         self.last_hit = 0
+        self.enemy = Enemy(screen_width,screen_width )
 
 
 
@@ -65,10 +67,11 @@ class Game():   #создали класс Game
 
         self.player1.animation_r()
         self.player1.animation_l()
-        if pg.time.get_ticks() - self.last_hit >= 1000:
-            self.player1.animation_hit()
-            self.player1.animation_hit_l()
-            self.last_hit = pg.time.get_ticks()
+       # if pg.time.get_ticks() - self.last_hit >= 1000:
+
+        self.player1.animation_hit()
+        self.player1.animation_hit_l()
+        self.last_hit = pg.time.get_ticks()
 
 
     def draw(self):   #создаём метод для отрисовки экрана
@@ -94,6 +97,7 @@ class Game():   #создали класс Game
 
         #self.map1.tiled_draw(self.screen)
         self.screen.blit(new_image ,(self.camera.new_player_rect(self.player1.rect ) ))
+        pg.draw.rect(self.screen,(255,0,0),self.enemy.rect)
 
 
         pg.display.flip()   #обновляем экран
