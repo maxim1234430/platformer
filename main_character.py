@@ -1,5 +1,6 @@
 import pygame as pg
 import pygame.image
+import time
 
 
 class Player(pg.sprite.Sprite ):  #создаём класс для игрока передаём который наследует класс Sprite
@@ -9,9 +10,15 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         #инициализация переменных для анимации
         self.frame_index_l = 0  # текущий кадр
         self.frame_index_r = 0
+        self.frame_index_h_r = 0
+        self.frame_index_h_l = 0
         self.animation_speed = 10  # скорость смены анимации
         self.frame_count_r = 0  # счётчик кадров
         self.frame_count_l = 0
+        self.frame_count_h = 0
+        self.frame_count_h_l = 0
+
+
 
         # загрузка изображений для анимации
         self.frames_r=[pygame.transform.scale(pygame.image.load("images/state1.png"),(16,32)),
@@ -25,6 +32,23 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             pygame.transform.scale(pygame.image.load("images/state7.png"), (16,32)),
             pygame.transform.scale(pygame.image.load("images/state8.png"), (16,32))]
 
+
+        self.frames_h_r = [pygame.transform.scale(pygame.image.load("images/attak1.png"),(16,32)),
+                        pygame.transform.scale(pygame.image.load("images/attak2.png"), (16,32)),
+                        pygame.transform.scale(pygame.image.load("images/attak3.png"), (16, 32)),
+                         pygame.transform.scale(pygame.image.load("images/attak4.png"), (16, 32)),
+                         pygame.transform.scale(pygame.image.load("images/attak5.png"), (16, 32))
+
+
+                                             ]
+
+        self.frames_h_l = [pygame.transform.scale(pygame.image.load("images/attak1l.png"), (16, 32)),
+                           pygame.transform.scale(pygame.image.load("images/attak2l.png"), (16, 32)),
+                           pygame.transform.scale(pygame.image.load("images/attak3l.png"), (16, 32)),
+                           pygame.transform.scale(pygame.image.load("images/attak4l.png"), (16, 32)),
+                           pygame.transform.scale(pygame.image.load("images/attak5l.png"), (16, 32))
+
+                           ]
 
         #начальное изображение
         self.image=self.frames_r[self.frame_index_r]
@@ -40,11 +64,13 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         self.is_jumping = False#состояние прыжка
         self.is_running_l = False#касание левой стены
         self.is_running_r = False#касание правой стены
+        self.is_hit = False
         self.map_width = map_width#размеры карты чтобы персонаж не мог выйти за них
         self.map_height = map_height
         self.jump_speed = -3#скорость с которой игрок прыгает
         self.vert_speed = 0#скорость движения игрока по вертикали состоит из гравитации и прыжка
         self.high_jump = 10#максимальная высота на которую мы можем прыгнуть
+        self.direct_move = "r"
 
     #метод для движения игрока
     def move(self, keys, is_on_floor):
@@ -73,6 +99,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         if keys[pg.K_a]:
             new_x = self.rect.x - 1
             self.is_running_l=True
+            self.direct_move = "l"
             if new_x >= 0 and new_x <=self.map_width:
                 self.rect.x = new_x
 
@@ -87,6 +114,7 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
         if keys[pg.K_d]:
             new_x =self.rect.x+1
             self.is_running_r=True
+            self.direct_move = "r"
             if new_x >= 0 and new_x<self.map_width-30:
                 self.rect.x = new_x
 
@@ -95,7 +123,18 @@ class Player(pg.sprite.Sprite ):  #создаём класс для игрока
             self.is_running_r=False
 
 
-de
+
+
+
+    def hit(self,enemy_rect,keys):
+        if keys[pg.K_q]:
+            self.is_hit = True
+            print("кнопка q нажата")
+        else:
+            self.is_hit = False
+
+
+
 
 
 
@@ -127,5 +166,36 @@ de
         elif not self.is_running_l and self.image in self.frames_l :
             self.frame_count_l = 0
             self.frame_index_l = 0
+            self.image = self.frames_l[0]
+
+    def animation_hit(self):
+        if self.is_hit and self.direct_move == "r":
+            if self.frame_count_h %self.animation_speed == 0:
+                self.frame_count_h = 0
+                self.frame_count_h = 0
+                self.frame_index_h_r+=1
+
+            self.image = self.frames_h_r [self.frame_index_h_r]
+            if self.frame_index_h_r == 4:
+                self.frame_index_h_r = 0
+        elif not self.is_hit and self.image in self.frames_h_r :
+            self.frame_count_h = 0
+            self.frame_index_h = 0
+            self.image = self.frames_r[0]
+
+
+
+    def animation_hit_l(self):
+        if self.is_hit and self.direct_move == "l":
+            if self.frame_count_h_l  %self.animation_speed == 0:
+                self.frame_count_h_l = 0
+                self.frame_count_h_l = 0
+                self.frame_index_h_l+=1
+            self.image = self.frames_h_l [self.frame_index_h_l ]
+            if self.frame_index_h_l  == 4:
+                self.frame_index_h_l = 0
+        elif not self.is_hit and self.image in self.frames_h_l :
+            self.frame_count_h_l = 0
+            self.frame_index_h_l = 0
             self.image = self.frames_l[0]
 

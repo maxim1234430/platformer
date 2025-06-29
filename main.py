@@ -1,10 +1,10 @@
-import pygame as pg  #импортивали библиотеку pygame как pg
-import pytmx
-from map import Tiled_map
-from main_character import Player
-from traps import Moving_object
-from screen_resise import Camera
+import pygame as pg  # импортивали библиотеку pygame как pg
 
+from main_character import Player
+from map import Tiled_map
+from screen_resise import Camera
+from traps import Moving_object
+import time
 
 pg.init()     #инициализировали библиотеку pygame
 screen_width = 1600 #сохранили длину экрана в отдельную переменную
@@ -24,6 +24,7 @@ class Game():   #создали класс Game
         self.molot = Moving_object(self.moving_tiles,self.tile_image , 100 , 1)
         self.platforma = Moving_object(self.moving_tiles2,self.tile_image2, 40, 2)
         self.camera = Camera(self.map1.width ,self.map1.height ,screen_width ,screen_height )
+        self.last_hit = 0
 
 
 
@@ -60,9 +61,14 @@ class Game():   #создали класс Game
         self.platforma.update()
         self.player1.move(keys,self.map1.is_on_floor )
         self.camera.player_center(self.player1.rect)    # вычесляем местоположение игрока чтобы он был в центре экрана
+        self.player1.hit(None,keys )
 
         self.player1.animation_r()
         self.player1.animation_l()
+        if pg.time.get_ticks() - self.last_hit >= 1000:
+            self.player1.animation_hit()
+            self.player1.animation_hit_l()
+            self.last_hit = pg.time.get_ticks()
 
 
     def draw(self):   #создаём метод для отрисовки экрана
